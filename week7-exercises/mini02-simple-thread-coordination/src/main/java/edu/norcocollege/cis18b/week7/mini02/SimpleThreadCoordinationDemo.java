@@ -14,26 +14,34 @@ public class SimpleThreadCoordinationDemo {
     }
 
     static List<String> runDemo() throws InterruptedException {
+
         CountDownLatch startGate = new CountDownLatch(1);
         List<String> completionLog = new ArrayList<>();
+
         List<Thread> workers = List.of(
-            new Thread(new WorkerTask("grade-importer", 3, 20L, startGate, completionLog), "grade-importer"),
-            new Thread(new WorkerTask("email-notifier", 2, 30L, startGate, completionLog), "email-notifier"),
-            new Thread(new WorkerTask("roster-sync", 4, 15L, startGate, completionLog), "roster-sync")
+                new Thread(new WorkerTask("grade-importer", 3, 20L, startGate, completionLog), "grade-importer"),
+                new Thread(new WorkerTask("email-notifier", 2, 30L, startGate, completionLog), "email-notifier"),
+                new Thread(new WorkerTask("roster-sync", 4, 15L, startGate, completionLog), "roster-sync")
         );
 
+        // start all threads
         for (Thread worker : workers) {
             worker.start();
         }
 
         System.out.println("All workers launched.");
+
+        // release all threads at once
         startGate.countDown();
 
+        // wait for all to finish
         for (Thread worker : workers) {
             worker.join();
         }
 
+        // deterministic ordering for output
         completionLog.sort(Comparator.naturalOrder());
+
         return completionLog;
     }
 }

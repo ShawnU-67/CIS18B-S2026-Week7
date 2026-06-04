@@ -536,3 +536,38 @@ Next step:
 * complete the mini-assignments in `week7-exercises/`
 * start each mini with `mvn test`
 * run `mvn exec:java` where the README asks for a demo run
+
+
+
+
+
+
+
+
+
+
+
+
+# Week 7 Concurrency Assignments
+
+## How to Compile and Run
+
+Each mini-assignment is a separate Maven project.
+
+### Run any mini:
+
+cd week7-exercises/mini0X-name
+mvn clean test
+mvn exec:java
+
+## Java Version Requirements
+
+- Mini 1–6, 8: Java 17
+- Mini 7: Java 21 (virtual threads)
+
+## Notes
+
+Each mini contains:
+- source code
+- tests (if provided)
+- runnable demo via Maven exec plugin
